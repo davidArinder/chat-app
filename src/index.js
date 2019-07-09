@@ -18,8 +18,12 @@ app.use(express.static(publicDirectoryPath))
 io.on('connection', (socket) => {
     console.log('New WebSocket connection')
 
-    socket.emit('message', generateMessage('Welcome!')) // send to single user
-    socket.broadcast.emit('message', generateMessage('A new user has joined')) // send to everyone except user
+    socket.on('join', ({ username, room }) => { // join room
+        socket.join(room)
+
+        socket.emit('message', generateMessage('Welcome!')) // send to single user
+        socket.broadcast.to(room).emit('message', generateMessage(`${username} has joined`)) // send to everyone except user
+    })
 
     socket.on('sendMessage', (message, callback) => {
         const filter = new Filter()
@@ -30,7 +34,7 @@ io.on('connection', (socket) => {
         }
 
         // if no profanity, send message
-        io.emit('message', generateMessage(message)) // send to all users
+        io.to('Renton').emit('message', generateMessage(message)) // send to all users
         callback()
     })
 
