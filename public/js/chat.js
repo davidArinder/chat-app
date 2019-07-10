@@ -75,4 +75,9 @@ $sendLocationButton.addEventListener('click', () => {
     })
 })
 
-socket.emit('join', { username, room })
+socket.emit('join', { username, room }, (error) => {
+    if (error) {
+        alert(error) // error popup
+        location.href = '/' // send them back to home page
+    }
+})
