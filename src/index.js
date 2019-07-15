@@ -3,7 +3,7 @@ const path = require('path')
 const http = require('http')
 const express = require('express')
 const socketio = require('socket.io')
-const Filter = require('bad-words')
+// const Filter = require('bad-words') // uncomment to turn on profanity filter
 const { generateMessage, generateLocationMessage } = require('./utils/messages')
 const { addUser,removeUser, getUser, getUsersInRoom } = require('./utils/users')
 
@@ -39,15 +39,23 @@ io.on('connection', (socket) => {
         callback()
     })
 
+    //  user is typing message
+    socket.on('typingMessage', (callback) => {
+        const user = getUser(socket.id) // current user
+
+        io.to(user.room).emit('message', `${user.username} is typing...`)
+        callback()
+    })
+    
     // send message
     socket.on('sendMessage', (message, callback) => {
         const user = getUser(socket.id) // current user
-        const filter = new Filter()
+        // const filter = new Filter()
 
-        // filter profanity
-        if (filter.isProfane(message)) {
-            return callback('Profanity is not allowed')
-        }
+        // filter profanity // uncomment to turn on profanity filter
+        // if (filter.isProfane(message)) {
+           // return callback('Profanity is not allowed')
+        //}
 
         // if no profanity, send message to all users in current user's room
         io.to(user.room).emit('message', generateMessage(user.username, message))

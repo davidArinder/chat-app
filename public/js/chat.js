@@ -73,6 +73,15 @@ socket.on('roomData', ({ room, users }) => {
     document.querySelector('#sidebar').innerHTML = html
 })
 
+// notify when typing
+$messageForm.addEventListener('typing', (e) => {
+    const message = e.target.elements.message.value
+    
+    if (message.length > 1) {
+        socket.emit('typingMessage')
+    }
+})
+
 // send messages
 $messageForm.addEventListener('submit', (e) => {
     e.preventDefault() // prevent page refresh
