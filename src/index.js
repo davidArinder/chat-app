@@ -40,12 +40,16 @@ io.on('connection', (socket) => {
     })
 
     //  user is typing message
-    socket.on('typingMessage', (callback) => {
-        const user = getUser(socket.id) // current user
+    // socket.on('typing', (message, callback) => {
+    //     const user = getUser(socket.id)
+    //     io.to(user.room).emit('typingMessage', user.username + message)
+    //     callback()
+        // const user = getUser(socket.id) // current user
 
-        io.to(user.room).emit('message', `${user.username} is typing...`)
-        callback()
-    })
+        // io.to(user.room).emit('message', `${user.username} is typing...`)
+        // callback()
+        // console.log()
+    //})
     
     // send message
     socket.on('sendMessage', (message, callback) => {

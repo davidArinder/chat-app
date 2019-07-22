@@ -18,29 +18,32 @@ const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true }
 
 // function to correctly scroll/not scroll to bottom 
 const autoscroll = () => {
+    const element = $messages.lastElementChild
+    element.scrollIntoView({behavior: 'smooth', block: 'end', inline: 'nearest'})
+
     // new message element
-    const $newMessage = $messages.lastElementChild
+    // const $newMessage = $messages.lastElementChild
 
-    // height of the new message
-    const newMessageStyles = getComputedStyle($newMessage)
-    const newMessageMargin = parseInt(newMessageStyles.marginBottom)
-    const newMessageHeight = $newMessage.offsetHeight + newMessageMargin
+    // // height of the new message
+    // const newMessageStyles = getComputedStyle($newMessage)
+    // const newMessageMargin = parseInt(newMessageStyles.marginBottom)
+    // const newMessageHeight = $newMessage.offsetHeight + newMessageMargin
 
-    // visible height
-    const visibleHeight = $messages.offsetHeight
+    // // visible height
+    // const visibleHeight = $messages.offsetHeight
 
-    // height of messages container
-    const containerHeight = $messages.scrollHeight
+    // // height of messages container
+    // const containerHeight = $messages.scrollHeight
 
-    // how far you have scrolled
-    const scrollOffset = $messages.scrollTop + visibleHeight
+    // // how far you have scrolled
+    // const scrollOffset = $messages.scrollTop + visibleHeight
 
-    if (containerHeight - newMessageHeight <= scrollOffset) {
-        $messages.scrollTop = $messages.scrollHeight // scroll to bottom
-    }
+    // if (containerHeight - newMessageHeight <= scrollOffset) {
+    //     $messages.scrollTop = $messages.scrollHeight // scroll to bottom
+    // }
 }
 
-// Messages
+// Messages box
 socket.on('message', (message) => {
     console.log(message)
     const html = Mustache.render(messageTemplate, {
@@ -74,13 +77,29 @@ socket.on('roomData', ({ room, users }) => {
 })
 
 // notify when typing
-$messageForm.addEventListener('typing', (e) => {
-    const message = e.target.elements.message.value
-    
-    if (message.length > 1) {
-        socket.emit('typingMessage')
+$messageFormInput.oninput = () => {
+    if ($messageFormInput.value.length > 1) {
+        console.log('user is typing')
+        const message = 'is typing...'
+        socket.emit('typing', message)
     }
-})
+}
+
+// $messageForm.oninput = (e) => {
+//     const message = e.target.elements.message.value
+//     console.log(message)
+    // if (e.length > 1) {
+    //     console.log('User is typing')
+    // }
+//}
+
+// $messageForm.oninput = (e) => {
+    // const message = e.target.elements.message.value
+    
+    // if (message.length > 1) {
+    //     socket.emit('typingMessage')
+    // }
+// }
 
 // send messages
 $messageForm.addEventListener('submit', (e) => {
