@@ -19,6 +19,11 @@ app.use(express.static(publicDirectoryPath))
 io.on('connection', (socket) => {
     console.log('New WebSocket connection')
 
+    // get rooms list, send to client
+    socket.on('getRooms', () => {
+        
+    })
+
     // user joins
     socket.on('join', ({ username, room }, callback) => { // join room
         const { error, user } = addUser({ id: socket.id, username, room })
@@ -37,7 +42,7 @@ io.on('connection', (socket) => {
         })
 
         callback()
-    })
+    }),
 
     //  user is typing message
     // socket.on('typing', (message, callback) => {

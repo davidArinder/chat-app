@@ -2,7 +2,7 @@
 A real-time chat app with Node and Socket.io
 
 Bugs:
-1) Large blocks of text obliterate side bar.
+<s>1) Large blocks of text obliterate side bar.</s>
 
 Features to add:
 1) Add "user is typing..."
