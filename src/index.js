@@ -6,6 +6,7 @@ const socketio = require('socket.io')
 // const Filter = require('bad-words') // uncomment to turn on profanity filter
 const { generateMessage, generateLocationMessage } = require('./utils/messages')
 const { addUser,removeUser, getUser, getUsersInRoom } = require('./utils/users')
+const { addRooms, removeRooms } = require('./utils/rooms')
 
 const app = express()
 const server = http.createServer(app)
@@ -20,13 +21,23 @@ io.on('connection', (socket) => {
     console.log('New WebSocket connection')
 
     // get rooms list, send to client
-    socket.on('getRooms', () => {
-        
-    })
+    // socket.on('getRooms', (room, callback) => {
+    //     const rooms = addRooms(room)
+
+    //     if (error) {
+    //         return callback(error)
+    //     }
+
+
+    // })
 
     // user joins
     socket.on('join', ({ username, room }, callback) => { // join room
         const { error, user } = addUser({ id: socket.id, username, room })
+        const rooms = addRooms(room)
+        // var room = io.sockets.adapter.rooms['my_room'];
+        rooms.length;
+        console.log(rooms)
         
         if (error) {
             return callback(error)

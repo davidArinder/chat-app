@@ -13,33 +13,33 @@ const addRooms = (room) => {
 }
 
 // get rooms from array to show
-const getRooms = () => {
+// const getRooms = () => {
 
-}
+// }
 
 // example rooms
-addRooms({
-    room: 'Seattle',
-    members: 2
-})
-addRooms({
-    room: 'Renton',
-    members: 0
-})
-addRooms({
-    room: 'Bellevue',
-    members: 10
-})
-addRooms({
-    room: 'Lynnwood',
-    members: 0
-})
+// addRooms({
+//     room: 'Seattle',
+//     members: 2
+// })
+// addRooms({
+//     room: 'Renton',
+//     members: 0
+// })
+// addRooms({
+//     room: 'Bellevue',
+//     members: 10
+// })
+// addRooms({
+//     room: 'Lynnwood',
+//     members: 0
+// })
 
-console.log(rooms)
+// console.log(rooms)
 
 // remove rooms from array when all users leave
 const removeRooms = rooms.filter(room => room.members > 0);
-console.log(removeRooms)
+// console.log(removeRooms)
 
 // removeRooms(rooms)
 
