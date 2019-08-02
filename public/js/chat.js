@@ -12,6 +12,7 @@ const $messages = document.querySelector('#messages')
 const messageTemplate = document.querySelector('#message-template').innerHTML
 const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML
 const sidebarTemplate = document.querySelector('#sidebar-template').innerHTML
+// const dropdownTemplate = document.querySelector('#dropdown-template').innerHTML
 
 // Options
 const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true }) // connect to chat room
@@ -76,6 +77,14 @@ socket.on('roomData', ({ room, users }) => {
     })
     document.querySelector('#sidebar').innerHTML = html
 })
+
+// member count
+// socket.on('memberCount', ({ roomCounts }) => {
+//     const html = Mustache.render(dropdownTemplate, {
+//         roomCounts
+//     })
+//     dropdownTemplate = html
+// })
 
 // notify when typing
 $messageFormInput.oninput = () => {
